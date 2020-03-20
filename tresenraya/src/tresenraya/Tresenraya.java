@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Tresenraya {
 
     private static final Scanner sc = new Scanner(System.in);
-    private static final Tablero t = new Tablero();
+    static boolean finaljuego = false;
 
     /**
      * @param args the command line arguments
@@ -24,11 +24,13 @@ public class Tresenraya {
         System.out.println("Jugador1 elige ficha: \n"
                 + " - Pulsa 1 para O \n"
                 + " - Pulsa 2 para X \n"
-                + "Al segundo jugador se le asignará la otra ficha...");
+                + "Al segundo jugador se le asignará la otra ficha...\n");
+
+        System.out.print("Elige ficha: ");
 
         int opcion = sc.nextInt();
 
-        t.crearTablero();
+        Tablero.crearTablero();
 
         switch (opcion) {
             case 1:
@@ -46,37 +48,40 @@ public class Tresenraya {
     }
 
     public static void faseGame(Jugador primero, Jugador segundo) {
-        boolean finaljuego = false;
+        
 
         while (!finaljuego) {
-            System.out.print("El jugador " + primero.toString() + " pone pieza");
-            System.out.print("Donde quieres ponerla? \n"
-                    + "Introduce fila y columna\n");
-            
-            System.out.print("Fila (x) : ");
-            int x = sc.nextInt();
-            System.out.print("Fila (y) : ");
-            int y = sc.nextInt();
+            for (int i = 0; i < 2; i++) {
+                switch(i){
+                        case 0: System.out.print("El jugador " + primero.toString() + " pone pieza\n");break;
+                        case 1: System.out.print("El jugador " + segundo.toString() + " pone pieza\n");break;
+                    }
+             
+                System.out.print("Donde quieres ponerla? \n"
+                        + "Introduce fila y columna\n");
 
-            if (x < t.getTablero().length && y < t.getTablero().length) {
-                primero.ponerFicha(x, y, t);
-            } else {
-                System.out.println("Introduce un valores del 0 al 2");
-            }
+                System.out.print("Fila (x) : ");
+                int x = sc.nextInt();
+                System.out.print("Columna (y) : ");
+                int y = sc.nextInt();
 
-            System.out.print("El jugador " + segundo.toString() + " pone pieza");
-            System.out.print("Donde quieres ponerla? \n"
-                    + "Introduce fila y columna\n");
-            
-            System.out.print("Fila (x) : ");
-            int x1 = sc.nextInt();
-            System.out.print("Fila (y) : ");
-            int y1 = sc.nextInt();
-
-            if (x < t.getTablero().length && y < t.getTablero().length) {
-                segundo.ponerFicha(x1, y1, t);
-            } else {
-                System.out.println("Introduce un valores del 0 al 2");
+                if (x < Tablero.getTablero().length && y < Tablero.getTablero().length) {
+                    switch(i){
+                        case 0: primero.ponerFicha(x, y);
+                        if(finaljuego){
+                            return;
+                        }
+                        break;
+                        case 1: segundo.ponerFicha(x, y);
+                        if(finaljuego){
+                            return;
+                        }
+                        break;
+                    }
+                    
+                } else {
+                    System.out.println("Introduce un valores del 0 al 2");
+                }
             }
 
         }

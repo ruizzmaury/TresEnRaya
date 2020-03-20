@@ -5,23 +5,26 @@
  */
 package tresenraya;
 
+import java.util.Scanner;
+
 /**
  *
  * @author mauri
  */
 public class Tablero {
 
-    private String[][] tablero = {  {"[]", "[]", "[]"}, 
-                                    {"[]", "[]", "[]"}, 
-                                    {"[]", "[]", "[]"}  };
+    private static final Scanner sc = new Scanner(System.in);
+
+    private static String[][] tablero = {{"[]", "[]", "[]"},
+    {"[]", "[]", "[]"},
+    {"[]", "[]", "[]"}};
 
     public Tablero() {
     }
-    
-    
+
     private int[][] casilla;
 
-    public String[][] getTablero() {
+    public static String[][] getTablero() {
         return tablero;
     }
 
@@ -41,13 +44,8 @@ public class Tablero {
         this.casilla = casilla;
     }
 
-    public void posicionarFicha(String tipoFicha, int fila, int columna) {
-        tablero[columna][fila] = tipoFicha;
+    public static void crearTablero() {
 
-    }
-
-    public void crearTablero() {
-        
         for (int x = 0; x < tablero.length; x++) {
             for (int y = 0; y < tablero.length; y++) {
                 System.out.print(tablero[y][x]);
@@ -55,9 +53,53 @@ public class Tablero {
             System.out.println("\n");
         }
     }
-    
-    public void ganarPartida(){
+
+    public static boolean ganarPartida(String tipoFicha) {
+        int x = 0;
+        int y = 0;
         
+        for (x = 0; x < tablero.length; x++) {
+            y = 0;
+
+            if ((tipoFicha.equals(tablero[y][x]))
+                    && (tipoFicha.equals(tablero[y+1][x]))
+                    && (tipoFicha.equals(tablero[y+2][x]))) {
+                
+                System.out.println("El jugador " + tipoFicha + " ha ganado!!");
+                return true;
+            }
+        }
+        
+        for (y = 0; y < tablero.length; y++) {
+            x = 0;
+
+            if ((tipoFicha.equals(tablero[y][x]))
+                    && (tipoFicha.equals(tablero[y][x + 1]))
+                    && (tipoFicha.equals(tablero[y][x + 2]))) {
+                
+                System.out.println("El jugador " + tipoFicha + " ha ganado!!");
+                return true;
+            }
+        }
+        x = 0;
+        y = 0;
+        if ((tipoFicha.equals(tablero[x][x]))
+                && (tipoFicha.equals(tablero[x + 1][x + 1]))
+                && (tipoFicha.equals(tablero[x + 2][x + 2]))) {
+            
+            System.out.println("El jugador " + tipoFicha + " ha ganado!!");
+            return true;
+        }
+
+        if ((tipoFicha.equals(tablero[0][2]))
+                && (tipoFicha.equals(tablero[1][1]))
+                && (tipoFicha.equals(tablero[2][0]))) {
+            
+            System.out.println("El jugador " + tipoFicha + " ha ganado!!");
+            return true;
+        }
+
+        return false;
     }
 
 }
